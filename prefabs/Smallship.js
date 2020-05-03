@@ -10,7 +10,7 @@ class Smallship extends Phaser.GameObjects.Sprite {
     update() {
         this.x -= this.speed;
         // wraparound from left to right edge
-        if (this.x <= 0-this.width) {
+        if (this.x <= 0) {
             this.reset();
         }
     }

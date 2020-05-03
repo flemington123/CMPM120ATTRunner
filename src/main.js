@@ -9,7 +9,7 @@
 // Create new artwork for all of the in-game assets (rocket, spaceships, explosion) (25) 
 let config = {
     type: Phaser.CANVAS,
-    width: 640,
+    width:720,
     height: 480,
     scene: [ Menu, Play ]
 }
@@ -24,5 +24,5 @@ game.settings = {
 }
 
 // reserve keyboard vars
-let keyF, keyLEFT, keyRIGHT;
+let keyF, keyLEFT, keyRIGHT, keyUP, keyDOWN;
 var highScore = 0;
