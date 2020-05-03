@@ -9,15 +9,17 @@ class Play extends Phaser.Scene {
         this.load.image('Stone', './assets/Stone.png');
         this.load.image('Gold', './assets/Gold.png');
         this.load.image('Back', './assets/Back.png');
+        //this.load.image('Rabbit', './assets/rabbit.png');
         // load spritesheet
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 9});
+        this.load.spritesheet('Rabbit', './assets/rabbit.png', {frameWidth: 75, frameHeight: 128, });
     }
 
     isPlaying = false;
 
     create() {
         // place tile sprite
-        this.Back = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'Back').setScale(1.5, 1.9).setOrigin(0, 0); 
+        this.Back = this.add.tileSprite(0, 0, game.config.width, game.config.height + 250, 'Back').setScale(1, 0.7).setOrigin(0, 0); 
 
         if(this.isPlaying == false){
             this.bgm = this.sound.add('music');
@@ -28,7 +30,14 @@ class Play extends Phaser.Scene {
         this.add.rectangle(0, 12, game.config.width, 50, 0x00FF00).setOrigin(0, 0);
   
         // add rocket (p1)
-        this.p1Rocket = new Rocket(this, 20, game.config.height/2, 'rocket').setScale(0.5, 0.5).setOrigin(0, 0);
+        this.p1Rocket = new Rocket(this, game.config.width / 2 - 8, 350, 'Rabbit').setScale(0.5, 0.5).setOrigin(0, 0);
+        this.anims.create({
+            key: 'RabbitAnims',
+            repeat: -1,
+            frames: this.anims.generateFrameNumbers('Rabbit', {start: 0, end: 7, first: 0}),
+            frameRate: 6
+        });
+        this.p1Rocket.setDepth(99999);
 
         // add spaceships (x3)
         this.ship01 = new Spaceship(this, game.config.width + 192, 110, 'Stone', 0, 30).setScale(0.25, 0.25).setOrigin(0,0);
@@ -55,6 +64,16 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
             frameRate: 30
         });
+        /*this.anims.create({
+            key: 'RabbitAnimas',
+            frames: this.anims.generateFrameNumbers('Rabbit'),
+            frameRate: 5,
+            repeat: -1
+        });*/
+
+        //var sprite = this.add.sprite(this.p1Rocket.x, this.p1Rocket.y, 'Rabbit').setScale(0.5);
+        //sprite.play('RabbitAnimas');
+        
 
         // player 1 score
         this.p1Score = 0;
@@ -97,6 +116,7 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        this.p1Rocket.play('RabbitAnims', true);
         // check key input for restart / menu
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
             highScore = this.p1Score;
@@ -114,6 +134,9 @@ class Play extends Phaser.Scene {
             this.ship02.update();
             this.ship03.update();
             this.smallship.update();
+           /* this.sprite.x = this.p1Rocket.x;
+            this.sprite.y = this.p1Rocket.y; */
+            
         }             
         // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
@@ -143,15 +166,15 @@ class Play extends Phaser.Scene {
     checkCollision(rocket, ship) {
         // simple AABB checking
         if (rocket.x < ship.x + ship.width*0.25 && 
-            rocket.x + rocket.width*0.5 > ship.x && 
+            rocket.x + rocket.width*0.25 > ship.x && 
             rocket.y < ship.y + ship.height*0.25 &&
-            rocket.height*0.5 + rocket.y > ship. y) {
+            rocket.height*0.25 + rocket.y > ship. y) {
                 return true;
         } else {
             return false;
         }
     }
-
+   
     shipExplode(ship) {
         ship.alpha = 0;                         // temporarily hide ship
         // create explosion sprite at ship's position

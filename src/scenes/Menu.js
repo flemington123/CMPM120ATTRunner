@@ -28,7 +28,7 @@ class Menu extends Phaser.Scene {
             fixedWidth: 0
         }
 
-        this.Back = this.add.tileSprite(0, 0, game.config.width, game.config.height, 'Back').setScale(1.5, 1.9).setOrigin(0, 0); 
+        this.Back = this.add.tileSprite(0, 0, game.config.width, game.config.height + 250, 'Back').setScale(1, 0.7).setOrigin(0, 0); 
         // show menu text
         let centerX = game.config.width/2;
         let centerY = game.config.height/2;
