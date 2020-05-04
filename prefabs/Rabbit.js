@@ -17,7 +17,7 @@ class Rabbit extends Phaser.GameObjects.Sprite {
                 this.x += 3;
             } else if (keyUP.isDown && this.y > 62){
                 this.y -= 3;
-            } else if (keyDOWN.isDown && this.y < 400){
+            } else if (keyDOWN.isDown && this.y < 360){
                 this.y += 3;
             }
     }

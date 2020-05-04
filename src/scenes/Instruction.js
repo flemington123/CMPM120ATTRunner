@@ -27,9 +27,12 @@ class Instruction extends Phaser.Scene {
         let textSpacer = 64;
         
         
-        this.add.text(centerX, centerY- textSpacer, 'Instruction', overConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY- textSpacer * 3, 'Instruction', overConfig).setOrigin(0.5);
         overConfig.backgroundColor = '#FFB6C1';
         overConfig.color = '#FFF0F5';
+        this.add.text(centerX, centerY - textSpacer *2, 'Use keyright/left/up/down ', overConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - textSpacer, ' to control the rabbit avoiding the rocks', overConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY, 'Eating biscuits to gain the point! ', overConfig).setOrigin(0.5);
         this.add.text(centerX, centerY + textSpacer + 40, 'Press F to Menu', overConfig).setOrigin(0.5);  
         this.add.text(centerX, centerY + textSpacer + 80, 'Press SPACE to start', overConfig).setOrigin(0.5);
 

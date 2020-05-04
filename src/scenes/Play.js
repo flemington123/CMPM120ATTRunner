@@ -58,6 +58,7 @@ class Play extends Phaser.Scene {
         keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         keyUP = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.UP);
         keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         // animation config
         this.anims.create({
@@ -122,19 +123,17 @@ class Play extends Phaser.Scene {
                 },
                 fixedWidth: 150
             }
-            this.add.text(game.config.width/2, game.config.height/2, 'GAME OVER', scoreConfig).setOrigin(0.5);
-            scoreConfig.fixedWidth = 300;
-            this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
-        //    this.gameOver = true;
-        //}, null, this);
-        //this.timeMid = this.add.text(game.config.width/3*2-200, 20, 'Time: '+ this.timeMe, scoreConfig);
+            this.add.text(game.config.width/2, game.config.height/2 - 64, 'GAME OVER', scoreConfig).setOrigin(0.5);
+            scoreConfig.fixedWidth = 360;
+            this.add.text(game.config.width/2, game.config.height/2, 'Press "F" to restart', scoreConfig).setOrigin(0.5);
+            this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press "SPACE" to menu', scoreConfig).setOrigin(0.5);
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
             highScore = this.p1Score;
             console.log(highScore);
             this.scene.restart();
         }
-        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyLEFT)) {
+        if (this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start("menuScene");
         }
 
