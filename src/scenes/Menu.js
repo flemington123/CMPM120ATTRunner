@@ -7,10 +7,11 @@ class Menu extends Phaser.Scene {
         // load audio
         this.load.audio('sfx_select', './assets/blip_select12.wav');
         this.load.audio('sfx_explosion', './assets/explosion38.wav');
+        this.load.audio('Eat', './assets/Eat.wav');
         this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
         this.load.image('Back', './assets/Back.png');
         //background music, source:https://www.bensound.com
-        this.load.audio('music', './assets/epic.mp3');
+        this.load.audio('music', './assets/BGM.mp3');
     }
 
     create() {
@@ -38,12 +39,9 @@ class Menu extends Phaser.Scene {
         this.add.text(centerX, centerY, 'Press "F" to start', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(centerX, centerY + textSpacer, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);  
         
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-        keyLEFT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRIGHT = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
         
     }
 
@@ -53,20 +51,10 @@ class Menu extends Phaser.Scene {
             // easy mode
             game.settings = {
                 spaceshipSpeed: 3,
-                gameTimer: 60000    
+                //gameTimer: 60000    
             }
             this.sound.play('sfx_select');
             this.scene.start("playScene");    
         }
-        /*if (Phaser.Input.Keyboard.JustDown(keyRIGHT)) {
-            // hard mode
-            game.settings = {
-                spaceshipSpeed: 4,
-                gameTimer: 45000    
-            }
-            this.sound.play('sfx_select');
-            this.scene.start("playScene");    
-        }
-        */
     }
 }

@@ -5,20 +5,20 @@ class Rocket extends Phaser.GameObjects.Sprite {
         scene.add.existing(this);   // add to existing scene, displayList, updateList
         //this.sfxRocket = scene.sound.add('sfx_rocket'); // add rocket sfx
         //this.isFiring = false;      // track firing status
-        //game.anims.create({ key: 'RabbitAnimas', frames: game.anims.generateFrameNames('rabbit'), repeat: -1 });             
+        //game.anims.create({ key: 'RabbitAnimas', frames: game.anims.generateFrameNames('Rabbit'), repeat: -1 });             
     }
 
     update() {
         // left/right movement
         // if (!this.isFiring) {
             if (keyLEFT.isDown && this.x >= 12) {
-                this.x -= 2;
+                this.x -= 3;
             } else if (keyRIGHT.isDown && this.x <= 598) {
-                this.x += 2;
-            } else if (keyUP.isDown && this.y > 20){
-                this.y -= 2;
-            } else if (keyDOWN.isDown && this.y < 640){
-                this.y += 2;
+                this.x += 3;
+            } else if (keyUP.isDown && this.y > 62){
+                this.y -= 3;
+            } else if (keyDOWN.isDown && this.y < 400){
+                this.y += 3;
             }
         // }
         // fire button
