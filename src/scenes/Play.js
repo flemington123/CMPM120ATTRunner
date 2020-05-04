@@ -9,6 +9,7 @@ class Play extends Phaser.Scene {
         this.load.image('Stone', './assets/Stone.png');
         this.load.image('Gold', './assets/Gold.png');
         this.load.image('Back', './assets/Back.png');
+        this.load.image('RabbitDie', './assets/rabbitdie.png');
         //this.load.atlas('Rabbit','./assets/rabbit.png', './assets/Rabbit.json');
         //this.load.image('Rabbit', './assets /rabbit1.png');
         //this.load.image('Rabbit', './assets/rabbit.png');
@@ -115,7 +116,7 @@ class Play extends Phaser.Scene {
         //    this.add.text(game.config.width/2, game.config.height/2 + 64, '(F)ire to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
         //    this.gameOver = true;
         //}, null, this);
-        this.timeMid = this.add.text(game.config.width/3*2-200, 20, 'Time: '+ this.timeMe, scoreConfig);
+        //this.timeMid = this.add.text(game.config.width/3*2-200, 20, 'Time: '+ this.timeMe, scoreConfig);
     }
 
     update() {
@@ -140,19 +141,25 @@ class Play extends Phaser.Scene {
         }             
         // check collisions
         if(this.checkCollision(this.p1Rocket, this.ship03)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship03);   
-            this.ship03.y = Math.random() * 100 + 300;
+            this.p1Rocket.destroy();
+            this.add.sprite(this.p1Rocket.x, this.p1Rocket.y + 40, 'RabbitDie').setScale(0.08, 0.08);
+            this.gameOver = true;
+            //this.shipExplode(this.ship03);   
+            //this.ship03.y = Math.random() * 100 + 300;
         }
         if (this.checkCollision(this.p1Rocket, this.ship02)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship02);
-            this.ship02.y = Math.random() * 200 + 200;
+            this.p1Rocket.destroy();
+            this.add.sprite(this.p1Rocket.x, this.p1Rocket.y + 40, 'RabbitDie').setScale(0.08, 0.08);
+            this.gameOver = true;
+            //this.shipExplode(this.ship02);
+            //this.ship02.y = Math.random() * 200 + 200;
         }
         if (this.checkCollision(this.p1Rocket, this.ship01)) {
-            this.p1Rocket.reset();
-            this.shipExplode(this.ship01);
-            this.ship01.y = Math.random() * 200 + 100;
+            this.p1Rocket.destroy();
+            this.add.sprite(this.p1Rocket.x, this.p1Rocket.y + 40, 'RabbitDie').setScale(0.08, 0.08);
+            this.gameOver = true;
+            //this.shipExplode(this.ship01);
+            //this.ship01.y = Math.random() * 200 + 100;
         }
         if (this.checkCollision(this.p1Rocket, this.smallship)) {
             this.p1Score += this.smallship.points;
@@ -166,7 +173,7 @@ class Play extends Phaser.Scene {
             this.scoreRight.setText("HS: " + this.p1Score) ;
         }
 
-        this.timeMid.setText('Time: ' + Math.floor(this.timeMe-this.clock.getElapsedSeconds()));
+        //this.timeMid.setText('Time: ' + Math.floor(this.timeMe-this.clock.getElapsedSeconds()));
     }
 
     checkCollision(rocket, ship) {
@@ -184,13 +191,14 @@ class Play extends Phaser.Scene {
     shipExplode(ship) {
         ship.alpha = 0;                         // temporarily hide ship
         //create explosion sprite at ship's position
-        let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-        boom.anims.play('explode');             // play explode animation
-        boom.on('animationcomplete', () => {    // callback after animation completes
+        //let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
+        //boom.anims.play('explode');             // play explode animation
+        //boom.on('animationcomplete', () => {    // callback after animation completes
             ship.reset();                       // reset ship position
             ship.alpha = 1;                     // make ship visible again
             //boom.destroy();                     // remove explosion sprite
-        });
+        //});
+        
         // score increment and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;     
