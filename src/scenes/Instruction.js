@@ -36,18 +36,12 @@ class Instruction extends Phaser.Scene {
         this.add.text(centerX, centerY + textSpacer + 40, 'Press F to Menu', overConfig).setOrigin(0.5);  
         this.add.text(centerX, centerY + textSpacer + 80, 'Press SPACE to start', overConfig).setOrigin(0.5);
 
-        // BestScore display
-
-
         game.music = this.sound.add('music');
         game.music.setLoop(true);
-        
-        
         // define keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     }
-
     update() {
         this.Back.tilePositionX += 2;
         if (Phaser.Input.Keyboard.JustDown(keyF)) {

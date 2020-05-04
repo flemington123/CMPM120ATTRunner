@@ -5,17 +5,11 @@ class Play extends Phaser.Scene {
 
     preload() {
         // load images/tile sprites
-        this.load.image('rocket', './assets/rocket.png');
         this.load.image('Stone', './assets/Stone.png');
         this.load.image('Gold', './assets/Gold.png');
         this.load.image('Back', './assets/Back.png');
         this.load.image('RabbitDie', './assets/rabbitdie.png');
-        //this.load.atlas('Rabbit','./assets/rabbit.png', './assets/Rabbit.json');
-        //this.load.image('Rabbit', './assets /rabbit1.png');
-        //this.load.image('Rabbit', './assets/rabbit.png');
-        // load spritesheet
-        this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 9});
-        this.load.spritesheet('Rabbit', './assets/rabbit.png', {frameWidth: 75, frameHeight: 128, });
+        this.load.spritesheet('Rabbit', './assets/rabbitAtlas.png', {frameWidth: 60, frameHeight: 110, });
     }
 
     isPlaying = false;
@@ -27,7 +21,7 @@ class Play extends Phaser.Scene {
         
 
         // green UI background
-        this.add.rectangle(0, 12, game.config.width, 50, 0x00FF00).setOrigin(0, 0);
+        //this.add.rectangle(0, 12, game.config.width, 50, 0x00FF00).setOrigin(0, 0);
   
         // add rocket (p1)
         this.rabbit = new Rabbit(this, 20, game.config.height/2, 'Rabbit').setScale(0.5, 0.5).setOrigin(0, 0);
@@ -38,7 +32,7 @@ class Play extends Phaser.Scene {
             frameRate: 6
         });
         this.rabbit.play('RabbitAnimas');
-        this.rabbit.setDepth(99999);
+        
 
         // add spaceships (x3)
         this.rock01 = new Rock(this, game.config.width + 192, Math.random() * 100 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
@@ -66,21 +60,10 @@ class Play extends Phaser.Scene {
             frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9, first: 0}),
             frameRate: 30
         });
-        /*this.anims.create({
-            key: 'RabbitAnimas',
-            frames: this.anims.generateFrameNumbers('Rabbit'),
-            frameRate: 5,
-            repeat: -1
-        });*/
-
-        //var sprite = this.add.sprite(this.p1Rocket.x, this.p1Rocket.y, 'Rabbit').setScale(0.5);
-        //sprite.play('RabbitAnimas');
-        
 
         // player 1 score
         this.p1Score = 0;
         this.hScore = highScore;
-
 
         // score display UI
         let scoreConfig = {
@@ -97,19 +80,13 @@ class Play extends Phaser.Scene {
         }
         this.scoreLeft = this.add.text((game.config.width/3)-200, 20, this.p1Score, scoreConfig);
         this.scoreRight = this.add.text(game.config.width-200, 20,"HS: " + this.hScore, scoreConfig);
-
         // game over flag
         this.gameOver = false;
-
-        // 60-second play clock
         scoreConfig.fixedWidth = 0;
-        
     }
-    
-
     update() {
-        //this.p1Rocket.play('RabbitAnims', true);
         // check key input for restart / menu
+        this.Back.tilePositionX += 2;
         if (this.gameOver){
             let scoreConfig = {
                 fontFamily: 'Courier',
@@ -127,6 +104,7 @@ class Play extends Phaser.Scene {
             scoreConfig.fixedWidth = 360;
             this.add.text(game.config.width/2, game.config.height/2, 'Press "F" to restart', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width/2, game.config.height/2 + 64, 'Press "SPACE" to menu', scoreConfig).setOrigin(0.5);
+            this.Back.tilePositionX += -2;
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
             highScore = this.p1Score;
@@ -136,8 +114,6 @@ class Play extends Phaser.Scene {
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start("menuScene");
         }
-
-        this.Back.tilePositionX += 2;  // scroll tile sprite
         if (!this.gameOver) {               
             this.rabbit.update();         // update rocket sprite
             this.rock01.update();           // update spaceships (x3)
@@ -150,37 +126,29 @@ class Play extends Phaser.Scene {
             this.rabbit.destroy();
             this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
             this.gameOver = true;
-            
         }
         if (this.checkCollision(this.rabbit, this.rock02)) {
             this.rabbit.destroy();
             this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
             this.gameOver = true;
-            
         }
         if (this.checkCollision(this.rabbit, this.rock01)) {
             this.rabbit.destroy();
             this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
             this.gameOver = true;
-           
         }
-        if (this.checkCollision(this.rabbit, this.gold)) {
+        if (this.checkCollisionGold(this.rabbit, this.gold)) {
             this.p1Score += this.gold.points;
             this.scoreLeft.text = this.p1Score;  
             this.sound.play('Eat'); 
             this.gold.reset();
             this.gold.y = Math.random() * 300 + 100;
         }
-
         if(this.hScore <= this.p1Score){
             this.scoreRight.setText("HS: " + this.p1Score) ;
         }
-
-        //this.timeMid.setText('Time: ' + Math.floor(this.timeMe-this.clock.getElapsedSeconds()));
     }
-
     checkCollision(rabbit, rock) {
-        
         if (rabbit.x < rock.x + rock.width*0.25 && 
             rabbit.x + rabbit.width*0.25 > rock.x && 
             rabbit.y < rock.y + rock.height*0.15 &&
@@ -190,22 +158,14 @@ class Play extends Phaser.Scene {
             return false;
         }
     }
-   
-    /*shipExplode(rock) {
-        rock.alpha = 0;                         // temporarily hide ship
-        //create explosion sprite at ship's position
-        //let boom = this.add.sprite(ship.x, ship.y, 'explosion').setOrigin(0, 0);
-        //boom.anims.play('explode');             // play explode animation
-        //boom.on('animationcomplete', () => {    // callback after animation completes
-            rock.reset();                       // reset ship position
-            ship.alpha = 1;                     // make ship visible again
-            //boom.destroy();                     // remove explosion sprite
-        //});
-        
-        // score increment and repaint
-        this.p1Score += ship.points;
-        this.scoreLeft.text = this.p1Score;     
-        // play sound
-        this.sound.play('sfx_explosion');  
-    }*/
+    checkCollisionGold(rabbit, rock) {
+        if (rabbit.x < rock.x + rock.width*0.25 && 
+            rabbit.x + rabbit.width*0.25 > rock.x && 
+            rabbit.y < rock.y + rock.height*0.5 &&
+            rabbit.height*0.25 + rabbit.y > rock.y) {
+                return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -6,13 +6,11 @@ class Rock extends Phaser.GameObjects.Sprite {
     }
     update() {
         this.x -= game.settings.spaceshipSpeed;
-        // wraparound from left to right edge
         if (this.x <= 0-this.width) {
             this.reset();
             this.y = Math.random() * 300 + 100;
         }
     }
-
     reset() {
         this.x = game.config.width;
     }

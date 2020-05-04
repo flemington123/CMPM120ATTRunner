@@ -11,15 +11,12 @@ let config = {
     height: 480,
     scene: [ Menu, Instruction, Play ]
 }
-
 // main game object
 let game = new Phaser.Game(config);
-
 // define game settings
 game.settings = {
     spaceshipSpeed: 2,
 }
-
 // reserve keyboard vars
 let keyF, keyLEFT, keyRIGHT, keyUP, keyDOWN, keySPACE;
 var highScore = 0;
