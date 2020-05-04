@@ -1,5 +1,5 @@
-// Rocket prefab
-class Rocket extends Phaser.GameObjects.Sprite {
+// Rabbit prefab
+class Rabbit extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);   // add to existing scene, displayList, updateList
@@ -9,7 +9,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        // left/right movement
+
         // if (!this.isFiring) {
             if (keyLEFT.isDown && this.x >= 12) {
                 this.x -= 3;
@@ -20,24 +20,7 @@ class Rocket extends Phaser.GameObjects.Sprite {
             } else if (keyDOWN.isDown && this.y < 400){
                 this.y += 3;
             }
-        // }
-        // fire button
-        /*if (Phaser.Input.Keyboard.JustDown(keyF) && !this.isFiring) {
-            this.isFiring = true;
-            this.sfxRocket.play();  // play sfx
-        }
-        // if fired, move up
-
-        if (this.isFiring && this.y >= 108) {
-            this.y -= 2;
-        }
-        // reset on miss
-        if (this.y <= 108) {
-            this.reset();
-        }
-        */
     }
-    // reset rocket to "ground"
     reset() {
         this.isFiring = false;
         this.y = game.config.height/2;
