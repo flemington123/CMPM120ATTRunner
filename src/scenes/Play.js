@@ -9,6 +9,7 @@ class Play extends Phaser.Scene {
         this.load.image('Back', './assets/Back.png');
         this.load.image('Water', './assets/Water.jpg');
         this.load.image('RabbitDie', './assets/rabbitdie.png');
+        this.load.audio('Become', './assets/Become.mp3');
         this.load.spritesheet('Rabbit', './assets/rabbitAtlas.png', {frameWidth: 60, frameHeight: 110, });
     }
     isPlaying = false;
@@ -113,42 +114,44 @@ class Play extends Phaser.Scene {
         if (!this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
             if(this.Scale == 0){
                 this.rabbit.setScale(1,1);
+                this.sound.play('Become'); 
                 this.Scale = 1;
             }else if(this.Scale == 1){
                 this.rabbit.setScale(0.5,0.5);
                 this.Scale = 0;
+                this.sound.play('Become'); 
             }
         }
         // check collisions
         if(this.checkCollision(this.rabbit, this.rock03)) {
-            if(this.Scale == 0){
+            //if(this.Scale == 0){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
-            }else{
-                this.rock03.reset();
-                this.rock03.y = Math.random() * 300 + 100;
-            }
+            //}else{
+            //    this.rock03.reset();
+            //    this.rock03.y = Math.random() * 300 + 100;
+            //}
         }
         if (this.checkCollision(this.rabbit, this.rock02)) {
-            if(this.Scale == 0){
+            //if(this.Scale == 0){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
-            }else{
-                this.rock02.reset();
-                this.rock02.y = Math.random() * 300 + 100;
-            }
+            //}else{
+            //    this.rock02.reset();
+            //    this.rock02.y = Math.random() * 300 + 100;
+            //}
         }
         if (this.checkCollision(this.rabbit, this.rock01)) {
-            if(this.Scale == 0){
+            //if(this.Scale == 0){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
-            }else{
-                this.rock01.reset();
-                this.rock01.y = Math.random() * 300 + 100;
-            }
+            //}else{
+            //    this.rock01.reset();
+            //    this.rock01.y = Math.random() * 300 + 100;
+            //}
         }
         if (this.checkCollisionWater(this.rabbit, this.water)){
             if(this.Scale == 0){
@@ -170,43 +173,54 @@ class Play extends Phaser.Scene {
         }
     }
     checkCollision(rabbit, rock) {
-            if (rabbit.x - 10 < rock.x + rock.width && 
-                rabbit.x + rabbit.width*0.5 - 10 > rock.x && 
-                rabbit.y - 10 < rock.y + rock.height &&
-                rabbit.height*0.5 + rabbit.y + 50 > rock.y ) {
+        if(this.Scale == 0){
+            if(rabbit.x < rock.x + rock.width*0.25 && 
+                rabbit.x + rabbit.width*0.25 > rock.x && 
+                rabbit.y < rock.y + rock.height*0.25 &&
+                rabbit.height*0.25 + rabbit.y > rock.y) {
                     return true;
             } else {
                 return false;
             }   
-    }
-    checkCollisionWater(rabbit, water) {
-        if  (this.Scale == 0){
-            if (rabbit.x < water.x + water.width && 
-                rabbit.x + rabbit.width - 40 > water.x && 
-                rabbit.y < water.y + water.height &&
-                rabbit.height + rabbit.y > water.y) {
-                    return true;
-            } else {
-                return false;
-            }
-        }else{
-            if (rabbit.x < water.x + water.width*0.5 && 
-                rabbit.x + rabbit.width*0.5 > water.x && 
-                rabbit.y + 40 < water.y + water.height*0.5 &&
-                rabbit.height*0.5 + rabbit.y + 20 > water.y) {
+        }if(this.Scale == 1){
+            if(rabbit.x < rock.x + rock.width*0.25 && 
+                rabbit.x + rabbit.width*0.5 > rock.x && 
+                rabbit.y < rock.y + rock.height*0.25 &&
+                rabbit.height*0.7 + rabbit.y > rock.y) {
                     return true;
             } else {
                 return false;
             }   
         }
     }
+    checkCollisionWater(rabbit, water) {
+        if(this.Scale == 0){
+            if(rabbit.x < water.x + water.width && 
+                rabbit.x + rabbit.width - 40 > water.x && 
+                rabbit.y < water.y + water.height &&
+                rabbit.height + rabbit.y > water.y) {
+                    return true;
+            }else{
+                return false;
+            }
+        }else{
+            if(rabbit.x < water.x + water.width*0.5 && 
+                rabbit.x + rabbit.width*0.5 > water.x && 
+                rabbit.y + 40 < water.y + water.height*0.5 &&
+                rabbit.height*0.5 + rabbit.y + 20 > water.y) {
+                    return true;
+            }else{
+                return false;
+            }   
+        }
+    }
     checkCollisionGold(rabbit, rock) {
-        if (rabbit.x < rock.x + rock.width*0.25 && 
+        if(rabbit.x < rock.x + rock.width*0.25 && 
             rabbit.x + rabbit.width*0.25 > rock.x && 
             rabbit.y < rock.y + rock.height*0.5 &&
             rabbit.height*0.25 + rabbit.y > rock.y) {
                 return true;
-        } else {
+        }else{
             return false;
         }
     }
