@@ -170,25 +170,14 @@ class Play extends Phaser.Scene {
         }
     }
     checkCollision(rabbit, rock) {
-        if  (!this.Scale == 1){
-            if (rabbit.x < rock.x + rock.width*0.25 && 
-                rabbit.x + rabbit.width*0.25 > rock.x && 
-                rabbit.y < rock.y + rock.height*0.15 &&
-                rabbit.height*0.25 + rabbit.y > rock.y) {
-                    return true;
-            } else {
-                return false;
-            }
-        }else{
-            if (rabbit.x < rock.x + rock.width*0.5 && 
-                rabbit.x + rabbit.width*0.5 > rock.x && 
-                rabbit.y + 40 < rock.y + rock.height*0.5 &&
-                rabbit.height*0.5 + rabbit.y + 20 > rock.y) {
+            if (rabbit.x - 10 < rock.x + rock.width && 
+                rabbit.x + rabbit.width*0.5 - 10 > rock.x && 
+                rabbit.y - 10 < rock.y + rock.height &&
+                rabbit.height*0.5 + rabbit.y + 50 > rock.y ) {
                     return true;
             } else {
                 return false;
             }   
-        }
     }
     checkCollisionWater(rabbit, water) {
         if  (this.Scale == 0){
