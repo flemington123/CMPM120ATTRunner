@@ -21,7 +21,7 @@ class Play extends Phaser.Scene {
         this.rock01 = new Rock(this, game.config.width + 192, Math.random() * 100 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock02 = new Rock(this, game.config.width + 96, Math.random() * 200 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock03 = new Rock(this, game.config.width, Math.random() * 300 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
-        this.water = new Water(this, game.config.width*3, 0, 'Water', 0).setScale(1, 1.6).setOrigin(0,0);
+        this.water = new Water(this, game.config.width*3, 300, 'Water', 0).setScale(1, 1.8).setOrigin(0,0);
         this.gold = new Gold(this, game.config.width, Math.random() * 300 + 100, 'Gold', 0, 50, 4).setOrigin(0,0);
         // add rocket (p1)
         this.rabbit = new Rabbit(this, 20, game.config.height/2, 'Rabbit').setScale(0.5, 0.5).setOrigin(0, 0);
@@ -99,6 +99,7 @@ class Play extends Phaser.Scene {
             highScore = this.p1Score;
             console.log(highScore);
             this.scene.restart();
+            game.music.setLoop(false);
         }
         if (this.gameOver && Phaser.Input.Keyboard.JustDown(keySPACE)) {
             this.scene.start("menuScene");
