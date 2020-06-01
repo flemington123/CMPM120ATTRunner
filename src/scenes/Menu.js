@@ -37,8 +37,9 @@ class Menu extends Phaser.Scene {
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         //Music
+        //this.music.play();
         game.music = this.sound.add('music');
-        game.music.setLoop(true);
+        game.music.setLoop(false);
     }
     update() {
         this.Back.tilePositionX += 2;
