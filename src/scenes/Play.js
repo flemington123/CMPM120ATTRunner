@@ -22,14 +22,14 @@ class Play extends Phaser.Scene {
         game.music.play();  
 
         //////////////////////// add objects ///////////////////////
-        this.water = new Water(this, game.config.width*3, 150, 'Water', 0).setScale(1, 1.8).setOrigin(0,0);
+        this.water = new Water(this, game.config.width*3, 0, 'Water', 0).setScale(1, 1.8).setOrigin(0,0);
         
         this.wall = new Wall(this, game.config.width, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
         this.rock01 = new Rock(this, game.config.width + 192, Math.random() * 100 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock02 = new Rock(this, game.config.width + 96, Math.random() * 200 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock03 = new Rock(this, game.config.width, Math.random() * 300 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
-        this.gate = new Gate(this, game.config.width , 150, 'Gate', 0).setScale(0.45, 0.45).setOrigin(0,0);
-        this.gate2 = new Gate(this, game.config.width , 300, 'Gate', 0).setScale(0.45, 0.45).setOrigin(0,0);
+        this.gate = new Gate(this, game.config.width + 20, 150, 'Gate', 0).setScale(0.38, 0.45).setOrigin(0,0);
+        this.gate2 = new Gate(this, game.config.width + 20, 300, 'Gate', 0).setScale(0.38, 0.45).setOrigin(0,0);
         
         this.gold = new Gold(this, game.config.width, Math.random() * 300 + 100, 'Gold', 0, 50, 4).setOrigin(0,0);
 
@@ -149,18 +149,21 @@ class Play extends Phaser.Scene {
                 this.sound.play('Become'); 
             }
         }
+        
 
         //////////////////////// collision ///////////////////////
         if((this.checkCollision(this.rabbit, this.rock03))&&(!this.checkCollision(this.rabbit, this.gate))){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
+                this.add.text(game.config.width/2, game.config.height/2 - 128, 'rock3').setOrigin(0.5);
         }
 
         if((this.checkCollision(this.rabbit, this.rock02))&&(!this.checkCollision(this.rabbit, this.gate))){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
+                this.add.text(game.config.width/2, game.config.height/2 - 128, 'rock2').setOrigin(0.5);
         }
         
         if((this.checkCollision(this.rabbit, this.rock01))&&(!this.checkCollision(this.rabbit, this.gate))){
@@ -168,6 +171,7 @@ class Play extends Phaser.Scene {
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
+                this.add.text(game.config.width/2, game.config.height/2 - 128, 'rock1').setOrigin(0.5);
             //}else{
             //    this.rock01.reset();
             //    this.rock01.y = Math.random() * 300 + 100;
@@ -179,18 +183,21 @@ class Play extends Phaser.Scene {
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
+                this.add.text(game.config.width/2, game.config.height/2 - 128, 'water').setOrigin(0.5);
             }
         }
         if ((this.checkCollisionWall(this.rabbit, this.wall))&&(!this.checkCollisionGate(this.rabbit, this.gate))){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
+                this.add.text(game.config.width/2, game.config.height/2 - 128, 'wall').setOrigin(0.5);
         }
         if ((this.checkCollisionGate(this.rabbit, this.gate))||(this.checkCollisionGate(this.rabbit, this.gate2))){
             if(this.Scale == 1){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
+                this.add.text(game.config.width/2, game.config.height/2 - 128, 'gate').setOrigin(0.5);
             }
         }
         
@@ -209,18 +216,18 @@ class Play extends Phaser.Scene {
     }
     checkCollision(rabbit, rock) {
         if(this.Scale == 0){
-            if(rabbit.x < rock.x + rock.width*0.25 && 
+            if(rabbit.x < rock.x + rock.width*0.15 && 
                 rabbit.x + rabbit.width*0.25 > rock.x && 
-                rabbit.y < rock.y + rock.height*0.25 &&
+                rabbit.y < rock.y + rock.height*0.15 &&
                 rabbit.height*0.25 + rabbit.y > rock.y) {
                     return true;
             } else {
                 return false;
             }   
         }if(this.Scale == 1){
-            if(rabbit.x < rock.x + rock.width*0.25 && 
+            if(rabbit.x < rock.x + rock.width*0.15 && 
                 rabbit.x + rabbit.width*0.5 > rock.x && 
-                rabbit.y < rock.y + rock.height*0.25 &&
+                rabbit.y < rock.y + rock.height*0.15 &&
                 rabbit.height*0.7 + rabbit.y > rock.y) {
                     return true;
             } else {
@@ -228,7 +235,7 @@ class Play extends Phaser.Scene {
             }   
         }
     }
-    //////////////////////// Wate collision ///////////////////////
+    //////////////////////// Water collision ///////////////////////
     checkCollisionWater(rabbit, water) {
         if(this.Scale == 0){
             if(rabbit.x < water.x + water.width && 
@@ -253,18 +260,18 @@ class Play extends Phaser.Scene {
     //////////////////////// Wall collision ///////////////////////
     checkCollisionWall(rabbit, wall) {
         if(this.Scale == 1){
-            if(rabbit.x < wall.x + wall.width && 
-                rabbit.x + rabbit.width > wall.x && 
-                rabbit.y < wall.y + wall.height &&
+            if(rabbit.x < wall.x + 80 + wall.width* 0.25 && 
+                rabbit.x + rabbit.width > wall.x + 80 && 
+                rabbit.y < wall.y + wall.height* 0.4 &&
                 rabbit.height + rabbit.y > wall.y) {
                     return true;
             }else{
                 return false;
             }
         }else{
-            if(rabbit.x < wall.x + wall.width && 
-                rabbit.x + rabbit.width > wall.x && 
-                rabbit.y  < wall.y + wall.height &&
+            if(rabbit.x < wall.x + 80 + wall.width* 0.25 && 
+                rabbit.x + rabbit.width > wall.x + 80 && 
+                rabbit.y  < wall.y + wall.height* 0.4 &&
                 rabbit.height + rabbit.y > wall.y) {
                     return true;
             }else{
@@ -275,18 +282,18 @@ class Play extends Phaser.Scene {
     //////////////////////// Gate collision ///////////////////////
     checkCollisionGate(rabbit, gate) {
         if(this.Scale == 1){
-            if(rabbit.x < gate.x + gate.width && 
+            if(rabbit.x < gate.x + gate.width * 1.5 && 
                 rabbit.x + rabbit.width > gate.x && 
-                rabbit.y < gate.y + gate.height &&
+                rabbit.y < gate.y + gate.height * 1.5 &&
                 rabbit.height + rabbit.y > gate.y) {
                     return true;
             }else{
                 return false;
             }
         }else{
-            if(rabbit.x < gate.x + gate.width && 
+            if(rabbit.x < gate.x + gate.width * 1.5 && 
                 rabbit.x + rabbit.width > gate.x && 
-                rabbit.y  < gate.y + gate.height &&
+                rabbit.y  < gate.y + gate.height * 1.5 &&
                 rabbit.height + rabbit.y > gate.y) {
                     return true;
             }else{

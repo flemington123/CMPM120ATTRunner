@@ -11,6 +11,6 @@ class Gate extends Phaser.GameObjects.Sprite {
         }
     }
     reset() {
-        this.x = game.config.width*3;
+        this.x = game.config.width*3 + 80;
     }
 }

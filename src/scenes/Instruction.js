@@ -12,7 +12,7 @@ class Instruction extends Phaser.Scene {
         let overConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#00FF00',
+            backgroundColor: '#F3B141',
             color: '#843605',
             align: 'right',
             padding: {

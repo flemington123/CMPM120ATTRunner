@@ -9,13 +9,15 @@ class Instruction2 extends Phaser.Scene {
         this.load.image('Water', './assets/Water.jpg');
         this.load.spritesheet('Rabbit', './assets/rabbitAtlas.png', {frameWidth: 60, frameHeight: 110, });
         this.load.image('LeftKey', './assets/LeftKey.png');
+        this.load.image('Wall', './assets/Wall.png');
+        this.load.image('Gate', './assets/Gate.png');
     }
     create() {
         let overConfig = {
             fontFamily: 'Courier',
             fontSize: '28px',
-            backgroundColor: '#D2691E',
-            color: '#000000',
+            backgroundColor: '#F3B141',
+            color: '#843605',
             align: 'right',
             padding: {
                 top: 5,
@@ -32,6 +34,8 @@ class Instruction2 extends Phaser.Scene {
         this.water = new Water(this, 40, 230, 'Water', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rabbit = new Rabbit(this, 40, 100, 'Rabbit').setScale(0.5, 0.5).setOrigin(0, 0);
         this.rabbit2 = new Rabbit(this, 120, 80, 'Rabbit').setScale(1, 1).setOrigin(0, 0);
+        this.wall = new Wall(this, 40, 330, 'Wall', 0).setScale(0.1, 0.1).setOrigin(0,0);
+        this.gate = new Gate(this, 50, 360, 'Gate', 0).setScale(0.1, 0.1).setOrigin(0,0);
 
         this.anims.create({
             key: 'RabbitAnimas',
