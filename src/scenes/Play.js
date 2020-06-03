@@ -24,12 +24,12 @@ class Play extends Phaser.Scene {
         //////////////////////// add objects ///////////////////////
         this.water = new Water(this, game.config.width*3, 0, 'Water', 0).setScale(1, 1.8).setOrigin(0,0);
         
-        this.wall = new Wall(this, game.config.width, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
+        
         this.rock01 = new Rock(this, game.config.width + 192, Math.random() * 100 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock02 = new Rock(this, game.config.width + 96, Math.random() * 200 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock03 = new Rock(this, game.config.width, Math.random() * 300 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
-        this.gate = new Gate(this, game.config.width + 20, 150, 'Gate', 0).setScale(0.38, 0.45).setOrigin(0,0);
-        this.gate2 = new Gate(this, game.config.width + 20, 300, 'Gate', 0).setScale(0.38, 0.45).setOrigin(0,0);
+        this.wall = new Wall(this, game.config.width, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
+        this.gate = new Gate(this, game.config.width + 35, 150, 'Gate', 0).setScale(0.35, 0.45).setOrigin(0,0);
         
         this.gold = new Gold(this, game.config.width, Math.random() * 300 + 100, 'Gold', 0, 50, 4).setOrigin(0,0);
 
@@ -134,7 +134,6 @@ class Play extends Phaser.Scene {
             this.water.update();
             this.wall.update();
             this.gate.update();
-            this.gate2.update();
         }    
 
         //////////////////////// change scale ///////////////////////
@@ -192,7 +191,7 @@ class Play extends Phaser.Scene {
                 this.gameOver = true;
                 this.add.text(game.config.width/2, game.config.height/2 - 128, 'wall').setOrigin(0.5);
         }
-        if ((this.checkCollisionGate(this.rabbit, this.gate))||(this.checkCollisionGate(this.rabbit, this.gate2))){
+        if (this.checkCollisionGate(this.rabbit, this.gate)){
             if(this.Scale == 1){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
