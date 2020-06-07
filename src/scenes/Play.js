@@ -19,8 +19,9 @@ class Play extends Phaser.Scene {
     create() {
         //////////////////////// add background ///////////////////////
         this.Back = this.add.tileSprite(0, 0, game.config.width, game.config.height + 250, 'Back').setScale(1, 0.7).setOrigin(0, 0); 
-        game.music.play();  
-
+        if (!this.gameOver){
+            game.music.play();  
+        }
         //////////////////////// add objects ///////////////////////
         this.water = new Water(this, game.config.width*3, 0, 'Water', 0).setScale(1, 1.8).setOrigin(0,0);
         
@@ -28,8 +29,8 @@ class Play extends Phaser.Scene {
         this.rock01 = new Rock(this, game.config.width + 192, Math.random() * 100 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock02 = new Rock(this, game.config.width + 96, Math.random() * 200 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock03 = new Rock(this, game.config.width, Math.random() * 300 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
-        this.wall = new Wall(this, game.config.width, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
-        this.gate = new Gate(this, game.config.width + 35, 150, 'Gate', 0).setScale(0.35, 0.45).setOrigin(0,0);
+        this.wall = new Wall(this, game.config.width * 2, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
+        this.gate = new Gate(this, game.config.width * 2 + 35, 150, 'Gate', 0).setScale(0.35, 0.45).setOrigin(0,0);
         
         this.gold = new Gold(this, game.config.width, Math.random() * 300 + 100, 'Gold', 0, 50, 4).setOrigin(0,0);
 

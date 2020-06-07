@@ -11,6 +11,6 @@ class Water extends Phaser.GameObjects.Sprite {
         }
     }
     reset() {
-        this.x = game.config.width*4;
+        this.x = game.config.width*3;
     }
 }
