@@ -23,14 +23,13 @@ class Play extends Phaser.Scene {
             game.music.play();  
         }
         //////////////////////// add objects ///////////////////////
-        this.water = new Water(this, game.config.width*3, 0, 'Water', 0).setScale(1, 1.8).setOrigin(0,0);
+        this.water = new Water(this, game.config.width*3, 0, 'Water', 0).setScale(1, 3.0).setOrigin(0,0);
         
-        
+        this.wall = new Wall(this, game.config.width * 4, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
+        this.gate = new Gate(this, game.config.width * 4 + 35, 150, 'Gate', 0).setScale(0.35, 0.55).setOrigin(0,0);
         this.rock01 = new Rock(this, game.config.width + 192, Math.random() * 100 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
-        this.rock02 = new Rock(this, game.config.width + 96, Math.random() * 200 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
+        this.rock02 = new Rock(this, game.config.width + 96, Math.random() * 200 + 150, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock03 = new Rock(this, game.config.width, Math.random() * 300 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
-        this.wall = new Wall(this, game.config.width * 2, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
-        this.gate = new Gate(this, game.config.width * 2 + 35, 150, 'Gate', 0).setScale(0.35, 0.45).setOrigin(0,0);
         
         this.gold = new Gold(this, game.config.width, Math.random() * 300 + 100, 'Gold', 0, 50, 4).setOrigin(0,0);
 
@@ -214,6 +213,8 @@ class Play extends Phaser.Scene {
         }
 
     }
+
+    //////////////////////// Rock collision ///////////////////////
     checkCollision(rabbit, rock) {
         if(this.Scale == 0){
             if(rabbit.x < rock.x + rock.width*0.15 && 
@@ -240,8 +241,8 @@ class Play extends Phaser.Scene {
         if(this.Scale == 0){
             if(rabbit.x < water.x + water.width && 
                 rabbit.x + rabbit.width - 40 > water.x && 
-                rabbit.y < water.y + water.height &&
-                rabbit.height + rabbit.y > water.y) {
+                rabbit.y-200 < water.y + water.height &&
+                rabbit.height + rabbit.y+500 > water.y) {
                     return true;
             }else{
                 return false;
@@ -282,7 +283,7 @@ class Play extends Phaser.Scene {
     //////////////////////// Gate collision ///////////////////////
     checkCollisionGate(rabbit, gate) {
         if(this.Scale == 1){
-            if(rabbit.x < gate.x + gate.width * 1.5 && 
+            if(rabbit.x < gate.x + gate.width * 0.25 && 
                 rabbit.x + rabbit.width > gate.x && 
                 rabbit.y < gate.y + gate.height * 1.5 &&
                 rabbit.height + rabbit.y > gate.y) {
@@ -291,8 +292,8 @@ class Play extends Phaser.Scene {
                 return false;
             }
         }else{
-            if(rabbit.x < gate.x + gate.width * 1.5 && 
-                rabbit.x + rabbit.width > gate.x && 
+            if(rabbit.x+20 < gate.x + gate.width * 1.5 && 
+                rabbit.x + rabbit.width > gate.x-50 && 
                 rabbit.y  < gate.y + gate.height * 1.5 &&
                 rabbit.height + rabbit.y > gate.y) {
                     return true;
@@ -301,14 +302,26 @@ class Play extends Phaser.Scene {
             }   
         }
     }
+    //////////////////////// Gold collision ///////////////////////
     checkCollisionGold(rabbit, rock) {
-        if(rabbit.x < rock.x + rock.width*0.25 && 
-            rabbit.x + rabbit.width*0.25 > rock.x && 
-            rabbit.y < rock.y + rock.height*0.5 &&
-            rabbit.height*0.25 + rabbit.y > rock.y) {
-                return true;
-        }else{
-            return false;
+        if(this.Scale == 0){
+            if(rabbit.x < rock.x + rock.width*0.15 && 
+                rabbit.x + rabbit.width*0.25 > rock.x && 
+                rabbit.y < rock.y + rock.height*0.7 &&
+                rabbit.height*0.5 + rabbit.y > rock.y) {
+                    return true;
+            } else {
+                return false;
+            }   
+        }if(this.Scale == 1){
+            if(rabbit.x < rock.x + rock.width*0.15 && 
+                rabbit.x + rabbit.width*0.5 > rock.x && 
+                rabbit.y < rock.y + rock.height*0.15 &&
+                rabbit.height*0.7 + rabbit.y > rock.y) {
+                    return true;
+            } else {
+                return false;
+            }   
         }
     }
 }
