@@ -24,9 +24,8 @@ class Play extends Phaser.Scene {
         }
         //////////////////////// add objects ///////////////////////
         this.water = new Water(this, game.config.width*3, 0, 'Water', 0).setScale(1, 3.0).setOrigin(0,0);
-        
-        this.wall = new Wall(this, game.config.width * 4, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
-        this.gate = new Gate(this, game.config.width * 4 + 35, 150, 'Gate', 0).setScale(0.35, 0.55).setOrigin(0,0);
+        this.wall = new Wall(this, game.config.width * 2, 0, 'Wall', 0).setScale(0.35, 0.6).setOrigin(0,0);
+        this.gate = new Gate(this, game.config.width * 2 + 35, 150, 'Gate', 0).setScale(0.35, 0.55).setOrigin(0,0);
         this.rock01 = new Rock(this, game.config.width + 192, Math.random() * 100 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock02 = new Rock(this, game.config.width + 96, Math.random() * 200 + 150, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
         this.rock03 = new Rock(this, game.config.width, Math.random() * 300 + 100, 'Stone', 0).setScale(0.25, 0.25).setOrigin(0,0);
@@ -185,7 +184,7 @@ class Play extends Phaser.Scene {
                 this.add.text(game.config.width/2, game.config.height/2 - 128, 'water').setOrigin(0.5);
             }
         }
-        if ((this.checkCollisionWall(this.rabbit, this.wall))&&(!this.checkCollisionGate(this.rabbit, this.gate))){
+        if ((this.checkCollisionWall(this.rabbit, this.wall))&&(!this.checkCollisionGate(this.rabbit, this.gate))){
                 this.rabbit.destroy();
                 this.add.sprite(this.rabbit.x, this.rabbit.y + 40, 'RabbitDie').setScale(0.08, 0.08);
                 this.gameOver = true;
@@ -260,26 +259,26 @@ class Play extends Phaser.Scene {
     }
     //////////////////////// Wall collision ///////////////////////
     checkCollisionWall(rabbit, wall) {
-        if(this.Scale == 1){
-            if(rabbit.x < wall.x + 80 + wall.width* 0.25 && 
-                rabbit.x + rabbit.width > wall.x + 80 && 
-                rabbit.y < wall.y + wall.height* 0.4 &&
-                rabbit.height + rabbit.y > wall.y) {
-                    return true;
-            }else{
-                return false;
-            }
-        }else{
-            if(rabbit.x < wall.x + 80 + wall.width* 0.25 && 
-                rabbit.x + rabbit.width > wall.x + 80 && 
-                rabbit.y  < wall.y + wall.height* 0.4 &&
-                rabbit.height + rabbit.y > wall.y) {
-                    return true;
-            }else{
-                return false;
-            }   
-        }
-    }
+                    if(this.Scale == 1){
+                        if(rabbit.x < wall.x + 80 + wall.width* 0.25 && 
+                            rabbit.x + rabbit.width > wall.x + 80 && 
+                            rabbit.y < wall.y + wall.height* 0.4 &&
+                            rabbit.height + rabbit.y > wall.y) {
+                                return true;
+                        }else{
+                            return false;
+                        }
+                    }else{
+                        if(rabbit.x < wall.x + 80 + wall.width* 0.25 && 
+                            rabbit.x + rabbit.width > wall.x + 80 && 
+                            rabbit.y  < wall.y + wall.height* 0.6 &&
+                            rabbit.height + rabbit.y > wall.y) {
+                                return true;
+                        }else{
+                            return false;
+                        }   
+                    }
+                }
     //////////////////////// Gate collision ///////////////////////
     checkCollisionGate(rabbit, gate) {
         if(this.Scale == 1){
@@ -294,8 +293,8 @@ class Play extends Phaser.Scene {
         }else{
             if(rabbit.x+20 < gate.x + gate.width * 1.5 && 
                 rabbit.x + rabbit.width > gate.x-50 && 
-                rabbit.y  < gate.y + gate.height * 1.5 &&
-                rabbit.height + rabbit.y > gate.y) {
+                rabbit.y  < gate.y + gate.height-150  &&
+                rabbit.height + rabbit.y > gate.y+100) {
                     return true;
             }else{
                 return false;
